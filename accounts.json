@@ -1,0 +1,21 @@
+{
+  "_comment": "Hardcoded config. Each account = one Plaid Item (one access_token) plus the specific account_ids within it you want to track. Get these once during Plaid Link setup. Recipients are the two humans who receive the group thread.",
+
+  "accounts": [
+    {
+      "label": "Chase Sapphire",
+      "access_token": "access-production-REPLACE-ME-1",
+      "account_ids": ["REPLACE-WITH-ACCOUNT-ID-1"]
+    },
+    {
+      "label": "Amex",
+      "access_token": "access-production-REPLACE-ME-2",
+      "account_ids": ["REPLACE-WITH-ACCOUNT-ID-2"]
+    }
+  ],
+
+  "recipients": [
+    "+16125550101",
+    "+16125550102"
+  ]
+}
