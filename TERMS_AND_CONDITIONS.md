@@ -2,32 +2,27 @@
 
 Effective date: May 26, 2026
 
-These Terms and Conditions ("Terms") govern your access to and use of the SMS financial alert service operated by [Company Name] ("we", "us", or "our"). By using the Service, you agree to these Terms.
+These Terms and Conditions ("Terms") govern your access to and use of the email-based financial alert service operated by [Company Name] ("we", "us", or "our"). By using the Service, you agree to these Terms.
 
 ## 1. Service Description
 
-The Service sends recurring and on-demand financial alert messages, including account balances, spending summaries, and conversation replies, via SMS/MMS using Twilio Conversations.
+The Service sends recurring and on-demand financial alert emails, including account balances, spending summaries, and reply-based follow-up messages.
 
-The Service may depend on third-party platforms, including Twilio and Plaid.
+The Service may depend on third-party platforms, including Plaid and email delivery providers.
 
 ## 2. Eligibility and Authority
 
 You represent that:
 
 - You are at least 18 years old (or the age of majority in your jurisdiction).
-- You are authorized to enroll the phone number(s) you provide.
+- You are authorized to enroll the email address(es) you provide.
 - You have authority to share any linked financial account data used by the Service.
 
-## 3. SMS Terms
+## 3. Email Terms
 
-By enrolling, you consent to receive SMS/MMS messages related to the Service.
+By enrolling, you consent to receive email messages related to the Service.
 
-- Message frequency: varies by usage and schedule.
-- Message and data rates: may apply.
-- Opt-out: reply STOP to unsubscribe.
-- Help: reply HELP for support.
-
-You are responsible for notifying us if your phone number changes.
+Message frequency varies based on usage and schedule.
 
 ## 4. User Responsibilities
 
@@ -40,7 +35,7 @@ You agree to:
 
 ## 5. Third-Party Services
 
-The Service relies on third-party providers, including Twilio and Plaid. Your use of those integrations may also be subject to their terms, policies, and availability.
+The Service relies on third-party providers, including Plaid and email delivery providers. Your use of those integrations may also be subject to their terms, policies, and availability.
 
 We are not responsible for outages, delays, or policy changes caused by third-party services.
 
@@ -66,7 +61,7 @@ You agree to defend, indemnify, and hold harmless [Company Name] and its officer
 
 We may suspend or terminate access to the Service at any time for any reason, including suspected abuse, noncompliance, or legal risk.
 
-You may stop using the Service at any time, including by replying STOP to unsubscribe from SMS messages.
+You may stop using the Service at any time.
 
 ## 11. Governing Law
 

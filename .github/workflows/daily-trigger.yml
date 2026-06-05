@@ -1,0 +1,25 @@
+name: Daily Finance Job
+
+on:
+  schedule:
+    # 7:00 AM America/Chicago during CDT (UTC-5). Adjust for CST if needed.
+    - cron: "0 12 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  trigger:
+    name: Trigger protected /run endpoint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Fly endpoint
+        run: |
+          curl --silent --show-error --fail-with-body \
+            --retry 3 \
+            --retry-delay 5 \
+            --retry-all-errors \
+            -X POST "${{ secrets.JOB_URL }}/run" \
+            -H "Authorization: Bearer ${{ secrets.RUN_TOKEN }}" \
+            -H "Content-Type: application/json"

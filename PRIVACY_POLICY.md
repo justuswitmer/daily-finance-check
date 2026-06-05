@@ -2,22 +2,22 @@
 
 Effective date: May 26, 2026
 
-This Privacy Policy explains how [Company Name] ("we", "us", or "our") collects, uses, discloses, and protects personal information when you use our SMS financial alert service (the "Service").
+This Privacy Policy explains how [Company Name] ("we", "us", or "our") collects, uses, discloses, and protects personal information when you use our email-based financial alert service (the "Service").
 
 ## 1. Scope
 
 This policy applies to information collected through:
 
-- SMS/MMS messages sent through Twilio Conversations.
-- Our backend services used to generate and send account-balance and spending alerts.
+- Email alerts sent by the Service.
+- Our backend services used to generate and send account-balance and spending summaries.
 - Any support communication related to the Service.
 
 ## 2. Information We Collect
 
 We may collect:
 
-- Contact information: phone number(s) used for message delivery.
-- Message content: inbound and outbound SMS/MMS content.
+- Contact information: email address(es) used for delivery.
+- Message content: inbound and outbound email content.
 - Account metadata: account labels, account identifiers, and calculated balance/spending summaries.
 - Technical information: timestamps, delivery statuses, IP logs, and service diagnostics.
 
@@ -27,33 +27,22 @@ We do not intentionally collect more data than needed to provide the Service.
 
 We use information to:
 
-- Deliver daily financial alerts and related conversation messages.
+- Deliver daily financial alerts and related responses.
 - Operate, maintain, and troubleshoot the Service.
 - Prevent abuse, fraud, and unauthorized access.
 - Comply with legal obligations.
 
-## 4. SMS Consent and Messaging Practices
+## 4. Email Consent and Messaging Practices
 
-By providing your phone number and participating in the Service, you consent to receive messages related to financial alerts and related replies in a shared conversation thread.
+By providing your email address and participating in the Service, you consent to receive financial alert emails and related replies.
 
-Message frequency may vary based on service activity (for example, daily alerts plus conversation replies).
-Message and data rates may apply.
-
-We do not sell, rent, or share mobile numbers or SMS consent data with third parties for their marketing or promotional purposes. Text messaging originator opt-in data and consent are not shared with third parties, except as required to deliver the Service (for example, through Twilio) or as required by law.
-
-Opt out:
-
-- Reply STOP to stop receiving messages.
-
-Help:
-
-- Reply HELP for support details.
+Message frequency may vary based on service activity (for example, daily alerts plus any follow-up replies).
 
 ## 5. Sharing and Service Providers
 
 We share information only as necessary with trusted providers, including:
 
-- Twilio, for SMS/MMS and conversation delivery.
+- Email delivery providers, for sending alerts.
 - Plaid, for financial account connectivity and data retrieval.
 - Hosting and infrastructure providers used to run the Service.
 

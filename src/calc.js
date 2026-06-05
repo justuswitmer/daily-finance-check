@@ -8,9 +8,7 @@ function isSpend(t) {
 }
 
 function sumSpend(transactions) {
-  return transactions
-    .filter(isSpend)
-    .reduce((acc, t) => acc + t.amount, 0);
+  return transactions.filter(isSpend).reduce((acc, t) => acc + t.amount, 0);
 }
 
 /**
@@ -18,21 +16,18 @@ function sumSpend(transactions) {
  */
 export function currentMonthTotal(transactions, now = new Date()) {
   const firstOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-  const inMonth = transactions.filter(
-    (t) => new Date(t.date) >= firstOfMonth
-  );
+  const inMonth = transactions.filter((t) => new Date(t.date) >= firstOfMonth);
   return sumSpend(inMonth);
 }
 
 /**
- * Rolling 30-day average daily spend.
- * Total spend over the trailing 30 days divided by 30.
+ * Rolling 30-day spend total.
  */
-export function thirtyDayAverage(transactions, now = new Date()) {
+export function thirtyDayTotal(transactions, now = new Date()) {
   const cutoff = new Date(now);
   cutoff.setDate(cutoff.getDate() - 30);
   const window = transactions.filter((t) => new Date(t.date) >= cutoff);
-  return sumSpend(window) / 30;
+  return sumSpend(window);
 }
 
 /**
@@ -49,9 +44,9 @@ export function totalBalance(balances) {
 function prettyCategory(key) {
   return key
     .toLowerCase()
-    .split('_')
+    .split("_")
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-    .join(' ');
+    .join(" ");
 }
 
 /**
@@ -73,7 +68,7 @@ export function categoryBreakdown(transactions, now = new Date()) {
     } else if (Array.isArray(t.category) && t.category.length) {
       key = t.category[0];
     } else {
-      key = 'Uncategorized';
+      key = "Uncategorized";
     }
 
     totals.set(key, (totals.get(key) || 0) + t.amount);
@@ -85,32 +80,33 @@ export function categoryBreakdown(transactions, now = new Date()) {
 }
 
 const usd = (n) =>
-  n.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+  n.toLocaleString("en-US", { style: "currency", currency: "USD" });
 
 /**
  * Build the morning message body.
  */
 export function buildMessage(balances, transactions, now = new Date()) {
   const month = currentMonthTotal(transactions, now);
-  const avg = thirtyDayAverage(transactions, now);
+  const thirtyDay = thirtyDayTotal(transactions, now);
   const total = totalBalance(balances);
   const byCategory = categoryBreakdown(transactions, now);
 
-  const monthName = now.toLocaleString('en-US', { month: 'long' });
+  const monthName = now.toLocaleString("en-US", { month: "long" });
 
   const perAccount = balances
     .map((b) => `  ${b.label}: ${usd(b.currentBalance || 0)}`)
-    .join('\n');
+    .join("\n");
 
-  const perCategory = byCategory.length
-    ? byCategory.map((c) => `  ${c.category}: ${usd(c.amount)}`).join('\n')
-    : '  (no spending yet this month)';
+  const perCategory =
+    byCategory.length ?
+      byCategory.map((c) => `  ${c.category}: ${usd(c.amount)}`).join("\n")
+    : "  (no spending yet this month)";
 
   return [
     `Good morning. Here's where things stand:`,
     ``,
     `${monthName} spending so far: ${usd(month)}`,
-    `30-day avg/day: ${usd(avg)}`,
+    `30-day total: ${usd(thirtyDay)}`,
     `Total current balance: ${usd(total)}`,
     ``,
     `${monthName} by category:`,
@@ -118,5 +114,5 @@ export function buildMessage(balances, transactions, now = new Date()) {
     ``,
     `By account:`,
     perAccount,
-  ].join('\n');
+  ].join("\n");
 }

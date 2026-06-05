@@ -1,21 +1,35 @@
-import express from 'express';
-import cron from 'node-cron';
-import { config } from './config.js';
-import { runDailyJob } from './index.js';
-import { handleInboundMessage } from './webhook.js';
+import express from "express";
+import cron from "node-cron";
+import { config } from "./config.js";
+import { runDailyJob } from "./index.js";
 
 const app = express();
-app.use(express.urlencoded({ extended: false })); // Twilio posts form-encoded
 app.use(express.json());
 
+function isAuthorizedRunRequest(req) {
+  if (!config.runToken) {
+    return { ok: false, status: 503, error: "RUN_TOKEN is not configured" };
+  }
+
+  const auth = req.get("authorization") || "";
+  const expected = `Bearer ${config.runToken}`;
+  if (auth !== expected) {
+    return { ok: false, status: 401, error: "unauthorized" };
+  }
+
+  return { ok: true };
+}
+
 // Health check (Fly.io likes this)
-app.get('/', (_req, res) => res.send('finance-alerts ok'));
+app.get("/", (_req, res) => res.send("finance-alerts ok"));
 
-// Inbound messages from Twilio Conversations (V2 entry point)
-app.post('/webhook', handleInboundMessage);
+// Protected trigger endpoint for external schedulers (GitHub Actions, etc.)
+app.post("/run", async (req, res) => {
+  const auth = isAuthorizedRunRequest(req);
+  if (!auth.ok) {
+    return res.status(auth.status).json({ ok: false, error: auth.error });
+  }
 
-// Manual trigger for testing without waiting for the cron
-app.post('/run', async (_req, res) => {
   try {
     const sid = await runDailyJob();
     res.json({ ok: true, sid });
@@ -24,14 +38,22 @@ app.post('/run', async (_req, res) => {
   }
 });
 
-// Schedule the daily job
-if (cron.validate(config.cronSchedule)) {
-  cron.schedule(config.cronSchedule, () => {
-    runDailyJob().catch((err) => console.error('Scheduled job failed:', err));
-  }, { timezone: config.tz });
-  console.log(`Scheduled daily job: "${config.cronSchedule}" (${config.tz})`);
+// Schedule the daily job unless explicitly disabled.
+if (config.enableInternalCron) {
+  if (cron.validate(config.cronSchedule)) {
+    cron.schedule(
+      config.cronSchedule,
+      () => {
+        runDailyJob().catch((err) => console.error("Scheduled job failed:", err));
+      },
+      { timezone: config.tz },
+    );
+    console.log(`Scheduled daily job: "${config.cronSchedule}" (${config.tz})`);
+  } else {
+    console.error(`Invalid CRON_SCHEDULE: ${config.cronSchedule}`);
+  }
 } else {
-  console.error(`Invalid CRON_SCHEDULE: ${config.cronSchedule}`);
+  console.log("Internal cron disabled (ENABLE_INTERNAL_CRON=false)");
 }
 
 app.listen(config.port, () => {
